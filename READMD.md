@@ -1,6 +1,7 @@
 # Coding Challenge: Sales Dashboard with Next.js & FastAPI
 
 ## Overview
+
 Your task is to build a simple, full-stack application featuring:
 1. **Next.js** as the frontend framework.
 2. **FastAPI** as the backend API layer.
