@@ -1,7 +1,6 @@
 # Coding Challenge: Sales Dashboard with Next.js & FastAPI
 
 ## Overview
-
 Your task is to build a simple, full-stack application featuring:
 1. **Next.js** as the frontend framework.
 2. **FastAPI** as the backend API layer.
@@ -28,7 +27,7 @@ You will parse the provided **`dummyData.json`** and render its nested structure
    - Implement CORS if needed, so the Next.js app can successfully request data from the FastAPI server.
    - Ensure your API is well-structured and documented (e.g., make use of FastAPI’s automatic docs or docstrings).
 
-4. **Bonus: AI Feature**
+4. **Bonus: AI Feature (Optional)**
    - Add an endpoint (e.g., `/api/ai`) that accepts user input (e.g., a question) and returns a generated or placeholder response.
    - Integrate this into the frontend with a simple form or input field where the user can type a question and view the AI’s response.
    - The AI logic can be **mocked** or **rule-based** if you do not wish to integrate an actual AI service. If you prefer, you may call any AI API you have access to (such as OpenAI, etc.).
@@ -48,6 +47,8 @@ Various Large Language Model (LLM) providers offer free or trial APIs. Here are 
 - **Upstage’s Solar**  
   Upstage provides a free API trial for its Solar LLM, showcasing its powerful features. Refer to their official documentation or blog for more information.
 
+Additionally, IBM, Study space, “Stibee,” and others may offer free or trial-based LLM APIs.
+
 > **LangChain**  
 > LangChain is a framework that supports integrating multiple LLMs in a unified way. You can check LangChain’s list of integrations to see which models are supported and choose the one that suits your project.
 
@@ -55,13 +56,37 @@ Using these free or trial options can help you add an AI chatbot or similar func
 
 ---
 
+## Submission Instructions (Fork & Pull Request)
+
+1. **Fork This Repository**  
+   - In the top-right corner of this repo page, click on the “Fork” button to create your own copy of the project under your GitHub account.
+
+2. **Clone Your Fork**  
+   - After forking, clone your forked repository to your local machine:
+     ```bash
+     git clone https://github.com/<your-username>/<repo-name>.git
+     ```
+3. **Implement Your Solution**  
+   - Work on your solution locally (both frontend and backend as described below).  
+   - Commit your changes in a clean, organized manner.
+
+4. **Push Changes & Create a Pull Request**  
+   - Once you finish your changes, push them to your forked repository:
+     ```bash
+     git push origin main
+     ```
+   - Then, go to your forked repository on GitHub and create a **Pull Request** against the original repository.  
+   - Provide a clear description of what you’ve implemented or any notable design choices.
+
+5. **Alternative Submission**  
+   - If you prefer not to make a PR, you can simply provide a link to your forked repository.
+
+---
+
 ## Deliverables
 
-- **Code Repository**: Provide your code in a public or private repository (GitHub, GitLab, etc.).  
-- **README**:  
-  - Include setup instructions (how to install and run both the backend and frontend).
-  - Mention any architectural decisions or noteworthy details about how you structured your code.
-- **Demo (Optional)**: If possible, include a short demo or screenshots showing the app in action.
+- **Forked Repository**: Contains all changes, with commits reflecting your development process.
+- **Pull Request (Optional)**: A clear, well-described PR to the main repository, showing how you integrated the new features.
 
 ---
 
@@ -91,7 +116,7 @@ Using these free or trial options can help you add an AI chatbot or similar func
 
 ## Getting Started
 
-1. **Clone or Download** this repository.
+1. **Clone or Download** this repository (or fork it, as described above).
 2. **Backend Setup**  
    - Navigate to the `backend` directory.  
    - Create a virtual environment (optional but recommended).  
