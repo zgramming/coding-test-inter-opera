@@ -75,11 +75,8 @@ Using these free or trial options can help you add an AI chatbot or similar func
      ```bash
      git push origin main
      ```
-   - Then, go to your forked repository on GitHub and create a **Pull Request** against the original repository.  
+   - Then, go to your forked repository on GitHub and Provide a link to your forked repository and emailing it to us
    - Provide a clear description of what you’ve implemented or any notable design choices.
-
-5. **Alternative Submission**  
-   - If you prefer not to make a PR, you can simply provide a link to your forked repository.
 
 ---
 
