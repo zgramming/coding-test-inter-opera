@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+// Remove default margin and padding
+* {
+  margin: 200;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color:"green";
+  font-family: Roboto, sans-serif;
+}
