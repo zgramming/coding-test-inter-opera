@@ -3,11 +3,17 @@
 import { PaginationSize } from "@/components/PaginationComponent";
 import { SideNavbar } from "@/components/SideNavbar";
 import { SalesReportData } from "@/interfaces/sales-report.interface";
-import { saleReports } from "@/utils/constant";
+import {
+  dashboardIndustryDeals,
+  dashboardRegionDeals,
+  dashboardSalesOverview,
+  saleReports,
+} from "@/utils/constant";
 import {
   ActionIcon,
   Alert,
   Badge,
+  Box,
   Card,
   CardSection,
   Divider,
@@ -31,9 +37,9 @@ import {
 import { useDebouncedState } from "@mantine/hooks";
 import { IconAi, IconFilter, IconSearch, IconX } from "@tabler/icons-react";
 import { useState } from "react";
+import { BarChart, PieChart } from "@mantine/charts";
 
 export default function Page() {
-  const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [activePagination, setPagination] = useState(1);
   const [sizePagination, setSizePagination] = useState<PaginationSize>("10");
   const [searchQuery, setSearchQuery] = useDebouncedState<string | undefined>(
@@ -76,7 +82,7 @@ export default function Page() {
             radius="xl"
             withCloseButton
             title="AI Feature"
-            icon={<IconAi size={16} />}
+            icon={<IconAi />}
           >
             You can use AI to ask questions related to the sales report. To fast
             access this feature, you can use the shortcut <Kbd>Ctrl</Kbd> +{" "}
@@ -85,14 +91,6 @@ export default function Page() {
           <Paper withBorder shadow="sm" radius="md" p={"lg"}>
             <Group justify="space-between">
               <Text>List of all Sales Reports</Text>
-              <ActionIcon
-                variant="filled"
-                aria-label="Filter"
-                onClick={() => setIsOpenFilter((prev) => !prev)}
-              >
-                {isOpenFilter && <IconX size={16} />}
-                {!isOpenFilter && <IconFilter size={16} />}
-              </ActionIcon>
             </Group>
             <Divider my={"md"} />
             <Group gap={"md"}>
@@ -154,21 +152,103 @@ export default function Page() {
             <CardSection withBorder inheritPadding py="xs">
               Sales Overview
             </CardSection>
-            <Stack></Stack>
+            <Stack p={"lg"}>
+              {/* <BarChart
+                h={300}
+                data={dashboardSalesOverview()}
+                dataKey="name"
+                getBarColor={(value) => (value > 700 ? "teal.8" : "red.8")}
+                series={[
+                  {
+                    name: "value",
+                    label: "Deal Value",
+                    color: "teal.8",
+                  },
+                ]}
+              /> */}
+
+              <BarChart
+                h={300}
+                data={dashboardSalesOverview()}
+                dataKey="name"
+                series={[
+                  {
+                    name: "dealValue",
+                    label: "Deal Value",
+                    color: "teal.8",
+                  },
+                ]}
+                valueFormatter={(value) =>
+                  value.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })
+                }
+                withBarValueLabel
+                withLegend
+              />
+            </Stack>
           </Card>
 
           <Card withBorder shadow="sm" radius="md">
             <CardSection withBorder inheritPadding py="xs">
               Region Most Deals
             </CardSection>
-            <Stack></Stack>
+            <Stack p={"lg"}>
+              <BarChart
+                h={300}
+                data={dashboardRegionDeals()}
+                dataKey="region"
+                series={[
+                  {
+                    name: "dealValue",
+                    label: "Deal Value",
+                  },
+                ]}
+                valueFormatter={(value) =>
+                  value.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })
+                }
+                withBarValueLabel
+                withLegend
+              />
+            </Stack>
           </Card>
 
           <Card withBorder shadow="sm" radius="md">
             <CardSection withBorder inheritPadding py="xs">
-              Client Most Deals
+              Industry Deals Distribution
             </CardSection>
-            <Stack></Stack>
+            <Stack p={"lg"}>
+              <Group gap={"xl"} align="start" justify="space-evenly">
+                <PieChart
+                  size={300}
+                  withLabelsLine
+                  labelsPosition="inside"
+                  labelsType="percent"
+                  withLabels
+                  data={[...dashboardIndustryDeals()]}
+                />
+                <Stack>
+                  <Stack gap={"sm"}>
+                    {dashboardIndustryDeals().map((item) => (
+                      <Group key={item.name} gap={"xs"}>
+                        <Box w={20} h={20} bg={item.color} />
+                        <Text>{item.name}</Text>
+                        <Text size="xs">
+                          {item.value.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                          })}
+                        </Text>
+                      </Group>
+                    ))}
+                  </Stack>
+                </Stack>
+              </Group>
+            </Stack>
           </Card>
         </Stack>
       </GridCol>

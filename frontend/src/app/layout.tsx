@@ -9,7 +9,7 @@ import "./globals.css";
 import "@mantine/core/styles.css";
 import "@mantine/charts/styles.css";
 import "@mantine/nprogress/styles.css";
-import '@mantine/spotlight/styles.css';
+import "@mantine/spotlight/styles.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,9 +27,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>
-          {children}
-        </MantineProvider>
+        <MantineProvider>{children}</MantineProvider>
       </body>
     </html>
   );

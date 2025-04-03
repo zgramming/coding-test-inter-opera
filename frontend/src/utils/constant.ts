@@ -1,4 +1,24 @@
 import { ISalesReport } from "@/interfaces/sales-report.interface";
+import { DefaultMantineColor } from "@mantine/core";
+
+// Generate 10 random colors pastel colors
+const COLORS: DefaultMantineColor[] = [
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "blue",
+  "cyan",
+  "indigo",
+  "violet",
+  "pink",
+  "grape",
+  "lime",
+  "teal",
+  "blue",
+  "dark",
+  "dark",
+];
 
 export const saleReports: ISalesReport = {
   salesReps: [
@@ -111,4 +131,91 @@ export const saleReports: ISalesReport = {
       ],
     },
   ],
+};
+
+export const dashboardSalesOverview = () => {
+  const result: {
+    name: string;
+    dealValue: number;
+  }[] = [];
+
+  for (const val of saleReports.salesReps) {
+    const totalDealsValue = val.deals.reduce(
+      (acc, deal) => acc + deal.value,
+      0
+    );
+
+    result.push({
+      name: val.name,
+      dealValue: totalDealsValue,
+    });
+  }
+
+  return result;
+};
+
+export const dashboardRegionDeals = () => {
+  const dic: { [key: string]: number } = {};
+
+  for (const val of saleReports.salesReps) {
+    const region = val.region;
+    const totalDealsValue = val.deals.reduce(
+      (acc, deal) => acc + deal.value,
+      0
+    );
+
+    if (dic[region]) {
+      dic[region] += totalDealsValue;
+    } else {
+      dic[region] = totalDealsValue;
+    }
+  }
+
+  // Dic into array
+  const result: { region: string; dealValue: number }[] = [];
+
+  for (const key in dic) {
+    result.push({
+      region: key,
+      dealValue: dic[key],
+    });
+  }
+
+  return result;
+};
+
+export const dashboardIndustryDeals = () => {
+  const dic: { [key: string]: number } = {};
+
+  for (const val of saleReports.salesReps) {
+    for (const client of val.clients) {
+      const industry = client.industry;
+      const totalDealsValue = val.deals.reduce(
+        (acc, deal) => acc + deal.value,
+        0
+      );
+
+      if (dic[industry]) {
+        dic[industry] += totalDealsValue;
+      } else {
+        dic[industry] = totalDealsValue;
+      }
+    }
+  }
+
+  // Dic into array
+  const result: { name: string; value: number; color: string }[] = [];
+  let i = 0;
+  for (const key in dic) {
+    // Generate random color
+
+    i++;
+    result.push({
+      name: key,
+      value: dic[key],
+      color: COLORS[i % COLORS.length],
+    });
+  }
+
+  return result;
 };
