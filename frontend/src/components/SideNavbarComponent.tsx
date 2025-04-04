@@ -6,7 +6,7 @@ import classes from "@/css/SideNavbar.module.css";
 
 const data = [{ link: "", label: "Sales", icon: IconDashboardFilled }];
 
-export function SideNavbar() {
+export function SideNavbarComponent() {
   const [active, setActive] = useState("Sales");
 
   const links = data.map((item) => (

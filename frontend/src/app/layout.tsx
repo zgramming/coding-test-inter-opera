@@ -10,6 +10,7 @@ import "@mantine/core/styles.css";
 import "@mantine/charts/styles.css";
 import "@mantine/nprogress/styles.css";
 import "@mantine/spotlight/styles.css";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,7 +28,9 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>{children}</MantineProvider>
+        <ReactQueryProvider>
+          <MantineProvider>{children}</MantineProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

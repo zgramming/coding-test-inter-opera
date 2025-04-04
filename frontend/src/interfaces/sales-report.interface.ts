@@ -1,5 +1,8 @@
 export interface ISalesReport {
-  salesReps: SalesReportData[];
+  data: SalesReportData[];
+  page: number;
+  limit: number;
+  total_items: number;
 }
 
 export interface SalesReportData {
@@ -12,14 +15,14 @@ export interface SalesReportData {
   clients: Client[];
 }
 
-interface Client {
-  name: string;
-  industry: string;
-  contact: string;
-}
-
 interface Deal {
   client: string;
   value: number;
   status: string;
+}
+
+interface Client {
+  name: string;
+  industry: string;
+  contact: string;
 }

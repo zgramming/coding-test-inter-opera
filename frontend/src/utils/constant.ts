@@ -1,4 +1,4 @@
-import { ISalesReport } from "@/interfaces/sales-report.interface";
+import { ISalesReport } from "@/interfaces/sales-reportv2.interface";
 import { DefaultMantineColor } from "@mantine/core";
 
 // Generate 10 random colors pastel colors
@@ -19,6 +19,9 @@ const COLORS: DefaultMantineColor[] = [
   "dark",
   "dark",
 ];
+
+export const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+export const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || "your_gemini_api_key";
 
 export const saleReports: ISalesReport = {
   salesReps: [
