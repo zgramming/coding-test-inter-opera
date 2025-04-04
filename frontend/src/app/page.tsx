@@ -26,7 +26,7 @@ import {
 } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
 import { IconAi, IconSearch } from "@tabler/icons-react";
-import { useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { SalesRepository } from "@/features/sales/sales.repository";
 import { ChartSalesOverviewComponent } from "@/components/ChartSalesOverviewComponent";
 import { ChartRegionOverviewComponent } from "@/components/ChartRegionOverviewComponent";
@@ -77,6 +77,21 @@ export default function Page() {
       setSearchQuery(value);
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === "k") {
+        event.preventDefault();
+        onOpenModal();
+      }
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.addEventListener("keydown", (e) => handleKeyDown(e as any));
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      window.removeEventListener("keydown", (e) => handleKeyDown(e as any));
+    };
+  }, []);
 
   const regions = [...new Set(sale?.data.map((item) => item.region))];
 
