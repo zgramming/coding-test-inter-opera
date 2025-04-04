@@ -1,6 +1,7 @@
 import { IDashboardSalesIndustryOverview } from "@/interfaces/dashboard-sales-industry-overview.interface";
 import { IDashboardSalesOverview } from "@/interfaces/dashboard-sales-overview.interface";
 import { IDashboardSalesRegionOverview } from "@/interfaces/dashboard-sales-region-overview.interface";
+import { SalesAskAiResponse } from "@/interfaces/sales-ask-ai.interface";
 import { ISalesReport } from "@/interfaces/sales-report.interface";
 import { http } from "@/utils/http";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +11,10 @@ interface UseGetSales {
   limit: number;
   region?: string;
   search?: string;
+}
+
+interface AskAIDto {
+  question: string;
 }
 
 const url = {
@@ -104,7 +109,23 @@ const hooks = {
   },
 };
 
+const api = {
+  askAI: async (payload: AskAIDto) => {
+    try {
+      const response: SalesAskAiResponse = await http.post(
+        `${url.base}/ask-ai`,
+        payload
+      );
+  
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+};
+
 export const SalesRepository = {
   url,
   hooks,
+  api,
 };

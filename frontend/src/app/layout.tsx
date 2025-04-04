@@ -4,13 +4,13 @@ import {
   MantineProvider,
   mantineHtmlProps,
 } from "@mantine/core";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 import "./globals.css";
 import "@mantine/core/styles.css";
 import "@mantine/charts/styles.css";
 import "@mantine/nprogress/styles.css";
-import "@mantine/spotlight/styles.css";
-import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { Notifications } from "@mantine/notifications";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,7 +29,11 @@ export default function RootLayout({
       </head>
       <body>
         <ReactQueryProvider>
-          <MantineProvider>{children}</MantineProvider>
+          <MantineProvider>
+            <Notifications position="top-right" />
+
+            {children}
+          </MantineProvider>
         </ReactQueryProvider>
       </body>
     </html>

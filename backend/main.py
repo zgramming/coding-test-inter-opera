@@ -4,7 +4,14 @@ import json
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from services.genai_service import GenAIService
+from dotenv import load_dotenv
+
 from models.sales_reps_model import SalesRepModel;
+from models.ai_response_model import AIResponseModel
+from models.user_question_dto import UserQuestionDto
+
+load_dotenv()
 
 COLORS = [
     "red",
@@ -31,6 +38,7 @@ app = FastAPI()
 # Load dummy data
 with open("dummyData.json", "r") as f:
     DUMMY_DATA = SalesRepModel.model_validate(json.load(f)).salesReps
+    DUMMY_DATA_JSON = json.dumps(DUMMY_DATA, default=lambda o: o.dict(), indent=4)
 
 # CORS middleware to allow requests from the frontend
 app.add_middleware(
@@ -40,14 +48,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Define a Pydantic model for the request body
-class UserQuestion(BaseModel):
-    question: str
-
-# Define a Pydantic model for the response
-class AIResponse(BaseModel):
-    answer: str
 
 @app.get("/api/sales")
 def get_data(
@@ -122,7 +122,6 @@ def get_region_overview():
     # Sort the result by total value in descending order
     result.sort(key=lambda x: x["value"], reverse=True)
     
-    
     return {
         "data": result,
     }
@@ -139,7 +138,7 @@ def get_industry_overview():
                 dict[industry] = {
                     "name": industry,
                     "value": 0,
-                    "color": COLORS[len(dict) % len(COLORS)],  # Assign a color from the list
+                    "color": COLORS[len(dict) % len(COLORS)],
                 }
             
             dict[industry]["value"] += totalDealsAmount
@@ -155,18 +154,14 @@ def get_industry_overview():
     }
 
 
-@app.post("/api/ai")
-async def ai_endpoint(request: Request):
-    """
-    Accepts a user question and returns a placeholder AI response.
-    (Optionally integrate a real AI model or external service here.)
-    """
-    body = await request.json()
-    user_question = body.get("question", "")
+@app.post("/api/sales/ask-ai", response_model=AIResponseModel)
+async def ai_endpoint(body: UserQuestionDto):
     
-    # Placeholder logic: echo the question or generate a simple response
-    # Replace with real AI logic as desired (e.g., call to an LLM).
-    return {"answer": f"This is a placeholder answer to your question: {user_question}"}
+    raise ValueError("Invalid question")
+    result = GenAIService().start_chat(input_text=body.question, scope_data=DUMMY_DATA_JSON)
+    return {
+        "answer": result,
+    }
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
