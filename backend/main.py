@@ -157,7 +157,6 @@ def get_industry_overview():
 @app.post("/api/sales/ask-ai", response_model=AIResponseModel)
 async def ai_endpoint(body: UserQuestionDto):
     
-    raise ValueError("Invalid question")
     result = GenAIService().start_chat(input_text=body.question, scope_data=DUMMY_DATA_JSON)
     return {
         "answer": result,

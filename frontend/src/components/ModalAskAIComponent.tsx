@@ -1,6 +1,16 @@
 import { SalesRepository } from "@/features/sales/sales.repository";
 import { getErrorMessage } from "@/utils/function";
-import { Modal, Stack, Group, TextInput, ActionIcon, ScrollArea, Flex, Paper, Text } from "@mantine/core";
+import {
+  Modal,
+  Stack,
+  Group,
+  TextInput,
+  ActionIcon,
+  ScrollArea,
+  Flex,
+  Paper,
+  Text,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconAi, IconSend } from "@tabler/icons-react";
 import { useState } from "react";
@@ -16,8 +26,8 @@ export const ModalAI = ({ opened, onClose }: ModalAIProps) => {
     },
     validate: {
       question: (value) => {
-        if (value.length < 5) {
-          return "Question must be at least 5 characters";
+        if (value.length < 1) {
+            return "Question is required";
         }
         return null;
       },
@@ -88,7 +98,7 @@ export const ModalAI = ({ opened, onClose }: ModalAIProps) => {
               variant="outline"
               color="teal"
               size="lg"
-              disabled={form.values.question.length < 5}
+              disabled={form.values.question.length < 1}
               loading={isProcessing}
               type="submit"
             >
