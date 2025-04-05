@@ -100,29 +100,6 @@ export default function Page() {
           </Stack>
         </ScrollArea>
       </Flex>
-
-      {/* <Grid gutter={0}>
-        <GridCol
-          span={{
-            base: 12,
-            sm: 3,
-            lg: 2,
-          }}
-
-          className="bg-red-400"
-        >
-          <SideNavbarComponent />
-        </GridCol>
-        <GridCol
-          span={{
-            base: 12,
-            sm: 9,
-            lg: 10,
-          }}
-        >
-         
-        </GridCol>
-      </Grid> */}
       <ModalAI
         opened={isModalOpen}
         onClose={() => {
