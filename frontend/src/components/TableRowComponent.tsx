@@ -54,15 +54,21 @@ export const TableRow = ({ item, index }: TableRowProps) => {
             <TableTh colSpan={2}>VALUE</TableTh>
             <TableTh colSpan={2}>STATUS</TableTh>
           </TableTr>
-          {deals.map((deal) => (
-            <TableTr key={deal.client}>
-              <TableTd colSpan={3}>{deal.client}</TableTd>
-              <TableTd colSpan={2}>{deal.value}</TableTd>
-              <TableTd colSpan={2}>
-                <Badge color="green">{deal.status}</Badge>
-              </TableTd>
-            </TableTr>
-          ))}
+          {deals.map((deal) => {
+            const formattedValue = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(deal.value);
+            return (
+              <TableTr key={deal.client}>
+                <TableTd colSpan={3}>{deal.client}</TableTd>
+                <TableTd colSpan={2}>{formattedValue}</TableTd>
+                <TableTd colSpan={2}>
+                  <Badge color="green">{deal.status}</Badge>
+                </TableTd>
+              </TableTr>
+            );
+          })}
         </>
       )}
 
