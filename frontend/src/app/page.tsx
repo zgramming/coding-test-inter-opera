@@ -7,12 +7,12 @@ import {
   Alert,
   Button,
   Divider,
-  Grid,
-  GridCol,
+  Flex,
   Group,
   Kbd,
   LoadingOverlay,
   Paper,
+  ScrollArea,
   Select,
   Stack,
   Table,
@@ -97,23 +97,15 @@ export default function Page() {
 
   return (
     <>
-      <Grid gutter={0}>
-        <GridCol
-          span={{
-            base: 12,
-            sm: 3,
-            lg: 2,
-          }}
-        >
-          <SideNavbarComponent />
-        </GridCol>
-        <GridCol
-          span={{
-            base: 12,
-            sm: 9,
-            lg: 10,
-          }}
-        >
+      <Flex
+        direction={{
+          base: "column",
+          sm: "row",
+          lg: "row",
+        }}
+      >
+        <SideNavbarComponent />
+        <ScrollArea h={"100vh"} w={"100%"} bg={"red"}>
           <Stack p={"lg"} bg={"white"} mih={"100vh"}>
             <Alert
               variant="light"
@@ -203,8 +195,31 @@ export default function Page() {
             <ChartRegionOverviewComponent />
             <ChartIndustryOverviewComponent />
           </Stack>
+        </ScrollArea>
+      </Flex>
+
+      {/* <Grid gutter={0}>
+        <GridCol
+          span={{
+            base: 12,
+            sm: 3,
+            lg: 2,
+          }}
+
+          className="bg-red-400"
+        >
+          <SideNavbarComponent />
         </GridCol>
-      </Grid>
+        <GridCol
+          span={{
+            base: 12,
+            sm: 9,
+            lg: 10,
+          }}
+        >
+         
+        </GridCol>
+      </Grid> */}
       <ModalAI
         opened={isModalOpen}
         onClose={() => {

@@ -21,7 +21,7 @@ export function SideNavbarComponent() {
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
+      <span>{item.label}</span> 
     </a>
   ));
 
@@ -32,9 +32,13 @@ export function SideNavbarComponent() {
         sm: "100vh",
         lg: "100vh",
       }}
+      w={{
+        base: "100%",
+        sm: "100%",
+        lg: "300px",
+      }}
       bg={"blue"}
       p={"md"}
-      className="fixed"
     >
       <div className="h-full">
         <Group className={classes.header} justify="space-between">

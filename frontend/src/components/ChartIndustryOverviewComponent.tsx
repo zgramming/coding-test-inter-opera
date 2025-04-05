@@ -1,5 +1,4 @@
 import { SalesRepository } from "@/features/sales/sales.repository";
-import { dashboardIndustryDeals } from "@/utils/constant";
 import { PieChart } from "@mantine/charts";
 import {
   Card,
@@ -33,7 +32,7 @@ export const ChartIndustryOverviewComponent = () => {
           />
           <Stack>
             <Stack gap={"sm"}>
-              {dashboardIndustryDeals().map((item) => (
+              {data?.data.map((item) => (
                 <Group key={item.name} gap={"xs"}>
                   <Box w={20} h={20} bg={item.color} />
                   <Text>{item.name}</Text>
