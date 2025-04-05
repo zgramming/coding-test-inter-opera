@@ -136,7 +136,7 @@ Once the backend server is running, you can access the API documentation at:
 
 ## License
 
-[Add your license information here]
+[MIT](https://choosealicense.com/licenses/mit/)
 
 ## Contact
 
