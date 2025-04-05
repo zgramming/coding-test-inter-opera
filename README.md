@@ -123,9 +123,9 @@ The frontend will be available at `http://localhost:3000`.
 https://github.com/user-attachments/assets/4e44b997-15d9-44f9-a96b-3e4bf4de9704
 
 ## Roadmap
-
-- [x] Mobile responsive design improvements
 - [ ] Light & Dark Mode
+- [ ] Return stream from AI response instead of text
+- [x] Mobile responsive design improvements
 - [x] Mapping response AI. Convert markdown into html
 
 ## API Documentation
