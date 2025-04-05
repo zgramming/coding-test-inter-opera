@@ -43,7 +43,7 @@ cd backend
 pip install -r requirements.txt
 ```
 
-### 4. Environment Configuration
+### 4. Environment Configuration Backend
 
 Create a `.env` file in the backend directory:
 
@@ -56,6 +56,22 @@ Add the following environment variables to the `.env` file:
 
 ```
 GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+```
+
+### 5. Environment Configuration Frontend
+
+Create a `.env` file in the frontend directory:
+
+
+```bash
+cd frontend
+touch .env 
+```
+
+Add the following environment variables to the `.env` file:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ```
 
 ## Running the Application
