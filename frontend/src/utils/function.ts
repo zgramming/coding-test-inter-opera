@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import Showdown from "showdown";
 
 const getErrorMessage = (error: unknown) => {
   // Check if axios error
@@ -29,6 +30,14 @@ const getErrorMessage = (error: unknown) => {
   return message;
 };
 
-export {
-  getErrorMessage,
+const markdownToHtml = (markdown: string) => {
+  const converter = new Showdown.Converter({
+    tables: true,
+    strikethrough: true,
+    tasklists: true,
+    simplifiedAutoLink: true,
+  });
+  return converter.makeHtml(markdown);
 };
+
+export { getErrorMessage, markdownToHtml };

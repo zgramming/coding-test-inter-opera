@@ -1,4 +1,6 @@
-# Sales Dashboard
+# Boardles (Dashboard Sales)
+
+![Logo](documentation/screenshot/web-preview.png)
 
 This repository contains two projects:
 - Frontend: Built with NextJS
@@ -111,30 +113,19 @@ The frontend will be available at `http://localhost:3000`.
 ## Screenshots
 
 ### Home Page
-![Home Page](/screenshots/home.png)
-*Add a description of the home page here*
+![Home Page](documentation/screenshot/web-preview.png)
 
-### Dashboard
-![Dashboard](/screenshots/dashboard.png)
-*Add a description of the dashboard here*
-
-### Profile Page
-![Profile](/screenshots/profile.png)
-*Add a description of the profile page here*
+### Ask AI
+![Ask AI](documentation/screenshot/ask-ai.png)
 
 ## Demo Video
 
-[![Application Demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
-
-*Click the image above to watch a demonstration of the application. Replace VIDEO_ID with your actual YouTube video ID.*
-
-Alternatively, you can [download the demo video here](/demo/application-demo.mp4).
 
 ## Roadmap
 
-- [ ] Mobile responsive design improvements
+- [x] Mobile responsive design improvements
 - [ ] Light & Dark Mode
-
+- [x] Mapping response AI. Convert markdown into html
 
 ## API Documentation
 
@@ -148,4 +139,5 @@ Once the backend server is running, you can access the API documentation at:
 
 ## Contact
 
-[Add your contact information here]
+- Email : zeffry.reynando@gmail.com
+- Linkedin : https://www.linkedin.com/in/zeffry-reynando

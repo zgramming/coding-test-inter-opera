@@ -1,5 +1,5 @@
 import { SalesRepository } from "@/features/sales/sales.repository";
-import { getErrorMessage } from "@/utils/function";
+import { getErrorMessage, markdownToHtml } from "@/utils/function";
 import {
   Modal,
   Stack,
@@ -27,7 +27,7 @@ export const ModalAI = ({ opened, onClose }: ModalAIProps) => {
     validate: {
       question: (value) => {
         if (value.length < 1) {
-            return "Question is required";
+          return "Question is required";
         }
         return null;
       },
@@ -80,7 +80,9 @@ export const ModalAI = ({ opened, onClose }: ModalAIProps) => {
   };
 
   return (
-    <Modal title="Ask AI" opened={opened} onClose={onClose} centered>
+    <Modal title="Ask AI" opened={opened} onClose={onClose} 
+    size={"100%"}
+    centered>
       <form
         onSubmit={form.onSubmit((values) => {
           onSubmit(values);
@@ -118,6 +120,8 @@ export const ModalAI = ({ opened, onClose }: ModalAIProps) => {
                 </Text>
               )}
               {history.map((item, index) => {
+                const text = item.answer ? item.answer : item.question;
+                const mappingText = markdownToHtml(text ?? "");
                 return (
                   <Paper
                     key={index}
@@ -127,14 +131,13 @@ export const ModalAI = ({ opened, onClose }: ModalAIProps) => {
                     p={"lg"}
                     bg={item.answer ? "teal.0" : "gray.0"}
                   >
-                    <Text
+                    <div
                       style={{
                         textAlign: item.answer ? "left" : "right",
+                        fontWeight: "normal",
                       }}
-                      fw={"normal"}
-                    >
-                      {item.answer ? item.answer : item.question}
-                    </Text>
+                      dangerouslySetInnerHTML={{ __html: mappingText }}
+                    />
                   </Paper>
                 );
               })}
