@@ -6,12 +6,12 @@ import PaginationComponent, {
 import {
   Alert,
   Button,
+  Card,
   Divider,
   Flex,
   Group,
   Kbd,
   LoadingOverlay,
-  Paper,
   ScrollArea,
   Select,
   Stack,
@@ -34,23 +34,10 @@ import { ChartIndustryOverviewComponent } from "@/components/ChartIndustryOvervi
 import { TableRow } from "@/components/TableRowComponent";
 import { SideNavbarComponent } from "@/components/SideNavbarComponent";
 import { ModalAI } from "@/components/ModalAskAIComponent";
+import { OverlayError } from "@/components/OverlayErrorComponent";
 
 export default function Page() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activePagination, setPagination] = useState(1);
-  const [sizePagination, setSizePagination] = useState<PaginationSize>("10");
-  const [searchQuery, setSearchQuery] = useDebouncedState<string | undefined>(
-    "",
-    500
-  );
-  const [selectedRegion, setSelectedRegion] = useState<string | undefined>();
-
-  const { data: sale, isLoading } = SalesRepository.hooks.useGetSales({
-    page: activePagination,
-    limit: Number(sizePagination),
-    region: selectedRegion,
-    search: searchQuery,
-  });
 
   const onOpenModal = () => {
     setIsModalOpen(true);
@@ -58,24 +45,6 @@ export default function Page() {
 
   const onCloseModal = () => {
     setIsModalOpen(false);
-  };
-
-  const onChangeRegion = (value: string | null) => {
-    if (value === null) {
-      setSelectedRegion(undefined);
-    } else {
-      setSelectedRegion(value);
-    }
-  };
-
-  const onChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-
-    if (value.length === 0 || value === "") {
-      setSearchQuery(undefined);
-    } else {
-      setSearchQuery(value);
-    }
   };
 
   useEffect(() => {
@@ -92,8 +61,6 @@ export default function Page() {
       window.removeEventListener("keydown", (e) => handleKeyDown(e as any));
     };
   }, []);
-
-  const regions = [...new Set(sale?.data.map((item) => item.region))];
 
   return (
     <>
@@ -126,71 +93,7 @@ export default function Page() {
                 <IconAi size={24} />
               </Button>
             </Alert>
-            <Paper withBorder shadow="sm" radius="md" p={"lg"}>
-              <Group justify="space-between">
-                <Text>List of all Sales Reports</Text>
-              </Group>
-              <Divider my={"md"} />
-              <Group gap={"md"}>
-                <TextInput
-                  size="xs"
-                  placeholder="Search by name, role"
-                  rightSection={<IconSearch size={16} />}
-                  onChange={onChangeSearch}
-                  defaultValue={searchQuery}
-                />
-
-                <Select
-                  size="xs"
-                  placeholder="Pick Region"
-                  data={[...regions].map((region) => ({
-                    value: region,
-                    label: region,
-                  }))}
-                  nothingFoundMessage="No options"
-                  searchable
-                  clearable
-                  onChange={onChangeRegion}
-                />
-              </Group>
-              <Stack>
-                <LoadingOverlay visible={isLoading} />
-                <TableScrollContainer minWidth={500}>
-                  <Table verticalSpacing={"md"} striped highlightOnHover>
-                    <TableThead>
-                      <TableTr>
-                        <TableTh>NO</TableTh>
-                        <TableTh>NAME</TableTh>
-                        <TableTh>ROLE</TableTh>
-                        <TableTh>REGION</TableTh>
-                        <TableTh>SKILLS</TableTh>
-                        <TableTh>DEALS</TableTh>
-                        <TableTh>CLIENTS</TableTh>
-                      </TableTr>
-                    </TableThead>
-                    <TableTbody>
-                      {sale?.data.map((salesRep, index) => {
-                        return (
-                          <TableRow
-                            index={index}
-                            item={salesRep}
-                            key={salesRep.id}
-                          />
-                        );
-                      })}
-                    </TableTbody>
-                  </Table>
-                </TableScrollContainer>
-                <PaginationComponent
-                  activePagination={activePagination}
-                  onChangePagination={setPagination}
-                  onChangePaginationSize={setSizePagination}
-                  paginationSize={sizePagination}
-                  total={sale?.total_items ?? 0}
-                />
-              </Stack>
-            </Paper>
-
+            <TableComponent />
             <ChartSalesOverviewComponent />
             <ChartRegionOverviewComponent />
             <ChartIndustryOverviewComponent />
@@ -229,3 +132,108 @@ export default function Page() {
     </>
   );
 }
+
+const TableComponent = () => {
+  const [activePagination, setPagination] = useState(1);
+  const [sizePagination, setSizePagination] = useState<PaginationSize>("10");
+  const [searchQuery, setSearchQuery] = useDebouncedState<string | undefined>(
+    "",
+    500
+  );
+  const [selectedRegion, setSelectedRegion] = useState<string | undefined>();
+
+  const {
+    data: sale,
+    isLoading,
+    error,
+  } = SalesRepository.hooks.useGetSales({
+    page: activePagination,
+    limit: Number(sizePagination),
+    region: selectedRegion,
+    search: searchQuery,
+  });
+
+  const onChangeRegion = (value: string | null) => {
+    if (value === null) {
+      setSelectedRegion(undefined);
+    } else {
+      setSelectedRegion(value);
+    }
+  };
+
+  const onChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+
+    if (value.length === 0 || value === "") {
+      setSearchQuery(undefined);
+    } else {
+      setSearchQuery(value);
+    }
+  };
+
+  const regions = [...new Set(sale?.data.map((item) => item.region))];
+
+  return (
+    <Card withBorder shadow="sm" radius="md" p={"lg"}>
+      <LoadingOverlay visible={isLoading} />
+      <OverlayError error={error} show={!!error} />
+      <Group justify="space-between">
+        <Text>List of all Sales Reports</Text>
+      </Group>
+      <Divider my={"md"} />
+      <Group gap={"md"}>
+        <TextInput
+          size="xs"
+          placeholder="Search by name, role"
+          rightSection={<IconSearch size={16} />}
+          onChange={onChangeSearch}
+          defaultValue={searchQuery}
+        />
+
+        <Select
+          size="xs"
+          placeholder="Pick Region"
+          data={[...regions].map((region) => ({
+            value: region,
+            label: region,
+          }))}
+          nothingFoundMessage="No options"
+          searchable
+          clearable
+          onChange={onChangeRegion}
+        />
+      </Group>
+      <Stack>
+        <TableScrollContainer minWidth={500}>
+          <Table verticalSpacing={"md"} striped highlightOnHover>
+            <TableThead>
+              <TableTr>
+                <TableTh>NO</TableTh>
+                <TableTh>NAME</TableTh>
+                <TableTh>ROLE</TableTh>
+                <TableTh>REGION</TableTh>
+                <TableTh>SKILLS</TableTh>
+                <TableTh>DEALS</TableTh>
+                <TableTh>CLIENTS</TableTh>
+              </TableTr>
+            </TableThead>
+            <TableTbody>
+              {sale?.data.map((salesRep, index) => {
+                return (
+                  <TableRow index={index} item={salesRep} key={salesRep.id} />
+                );
+              })}
+            </TableTbody>
+          </Table>
+        </TableScrollContainer>
+        <PaginationComponent
+          activePagination={activePagination}
+          onChangePagination={setPagination}
+          onChangePaginationSize={setSizePagination}
+          paginationSize={sizePagination}
+          total={sale?.total_items ?? 0}
+        />
+      </Stack>
+    </Card>
+  );
+};

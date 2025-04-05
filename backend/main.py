@@ -1,8 +1,7 @@
 import uvicorn
 import json
 
-from fastapi import FastAPI, Request
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from services.genai_service import GenAIService
 from dotenv import load_dotenv
@@ -73,7 +72,7 @@ def get_data(
     start_index = (page - 1) * limit
     end_index = start_index + limit
     items = items[start_index:end_index]
-    
+
     return {
         "data": items,
         "page": page,
@@ -96,7 +95,7 @@ def get_sales_overview():
     
     # Sort the result by deal value in descending order
     result.sort(key=lambda x: x["value"], reverse=True)
-    
+
     return {
         "data": result,
     }

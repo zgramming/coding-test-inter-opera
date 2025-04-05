@@ -9,9 +9,10 @@ import {
   Text,
   LoadingOverlay,
 } from "@mantine/core";
+import { OverlayError } from "./OverlayErrorComponent";
 
 export const ChartIndustryOverviewComponent = () => {
-  const { data, isLoading } =
+  const { data, isLoading, error } =
     SalesRepository.hooks.useGetDashboardIndustryOverview();
 
   return (
@@ -19,8 +20,9 @@ export const ChartIndustryOverviewComponent = () => {
       <CardSection withBorder inheritPadding py="xs">
         Industry Deals Distribution
       </CardSection>
+      <LoadingOverlay visible={isLoading} />
       <Stack p={"lg"}>
-        <LoadingOverlay visible={isLoading} />
+        <OverlayError error={error} show={!!error} />
         <Group gap={"xl"} align="start" justify="space-evenly">
           <PieChart
             size={300}
