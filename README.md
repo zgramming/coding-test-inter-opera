@@ -55,7 +55,6 @@ touch .env
 Add the following environment variables to the `.env` file:
 
 ```
-# Database Configuration
 GEMINI_API_KEY=YOUR_GEMINI_API_KEY
 ```
 
